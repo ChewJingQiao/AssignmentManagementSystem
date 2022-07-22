@@ -3,7 +3,14 @@
     ViewData["Title"] = "Index";
 }
 
+@if (ViewBag.msg != "")
+{
+    <script>alert("@ViewBag.msg");</script>
+}
 <h1>Modules</h1>
+
+<p><a asp-controller="Modules" asp-action="AddModule">Add Module</a></p>
+
 
 <table border="1">
     <tr>
