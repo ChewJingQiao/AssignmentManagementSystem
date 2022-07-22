@@ -1,0 +1,27 @@
+﻿@model IEnumerable<AssignmentManagementSystem.Models.Task>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Modules</h1>
+
+<table border="1">
+    <tr>
+        <th>Task ID</th>
+        <th>Assignment Name</th>
+        <th>User Name</th>
+        <th>Submission Date</th>
+        <th>Submit Status</th>
+    </tr>
+    @foreach (var singledatarow in Model)
+    {
+        <tr>
+            <td>@singledatarow.TaskId</td>
+            <td>@singledatarow.Assignment.AssignmentName</td>
+            <td>@singledatarow.Users.lastName</td>
+            <td>@singledatarow.SubmissionDate</td>
+            <td>@singledatarow.SubmitStatus</td>
+        </tr>
+    }
+
+</table>

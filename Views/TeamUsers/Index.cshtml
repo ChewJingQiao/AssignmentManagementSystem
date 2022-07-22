@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Modules</h1>
+
+<table border="1">
+    <tr>
+        <th>Team User ID</th>
+        <th>Team ID</th>
+        <th>Student Name</th>
+    </tr>
+    @foreach (var singledatarow in Model)
+    {
+        <tr>
+            <td>@singledatarow.TeamUserId</td>
+            <td>@singledatarow.Team.TeamId</td>
+            <td>@singledatarow.Users.lastName</td>
+        </tr>
+    }
+
+</table>

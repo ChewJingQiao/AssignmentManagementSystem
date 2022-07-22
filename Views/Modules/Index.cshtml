@@ -1,0 +1,21 @@
+﻿@model IEnumerable<AssignmentManagementSystem.Models.Module>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Modules</h1>
+
+<table border="1">
+    <tr>
+        <th>Module ID</th>
+        <th>Module Name</th>
+    </tr>
+    @foreach (var singledatarow in Model)
+    {
+        <tr>
+            <td>@singledatarow.ModuleId</td>
+            <td>@singledatarow.ModuleName</td>
+        </tr>
+    }
+
+</table>
