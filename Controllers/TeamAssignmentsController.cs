@@ -20,7 +20,7 @@ namespace AssignmentManagementSystem.Controllers
     public class TeamAssignmentsController : Controller
     {
         private readonly AssignmentManagementSystemContext _context;
-        const string bucketname = "mvcflowershopgroup7tp058138";
+        const string bucketname = "assignmentmanagementsystem";
 
 
         public TeamAssignmentsController(AssignmentManagementSystemContext context)
@@ -100,7 +100,8 @@ namespace AssignmentManagementSystem.Controllers
 
                     //3.2.2 execute the request command
                     await s3clientobject.PutObjectAsync(uploadrequest);
-                    filename = filename + " " + file.FileName + " , ";
+                
+                filename = filename + " " + file.FileName + " , ";
                 }
                 catch (AmazonS3Exception ex)
                 {

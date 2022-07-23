@@ -32,6 +32,8 @@
             <td>@singledatarow.mark</td>
             <td>
                 <a asp-action="Mark" asp-route-id="@singledatarow.TeamAssignmentId">Mark</a>
+                <a asp-action="secondDownloadImage" asp-route-filename="@singledatarow.s3Location"><button>Download</button></a>
+
             </td>
         </tr>
     }
