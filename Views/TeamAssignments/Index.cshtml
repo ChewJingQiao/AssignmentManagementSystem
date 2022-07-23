@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (ViewBag.msg != "")
+{
+    <script>alert("@ViewBag.msg");</script>
+}
+
+<h1>Index</h1>
+
+<a asp-action="UploadAssignment" asp-controller="TeamAssignments">Submit Assignment</a>
