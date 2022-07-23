@@ -16,6 +16,8 @@ namespace AssignmentManagementSystem.Data
         {
         }
         public DbSet<AssignmentManagementSystem.Models.Module> Module { get; set; }
+        public DbSet<AssignmentManagementSystemUser> User { get; set; }
+
         public DbSet<AssignmentManagementSystem.Models.Assignment> Assignment { get; set; }
 
         public DbSet<AssignmentManagementSystem.Models.Team> Team { get; set; }

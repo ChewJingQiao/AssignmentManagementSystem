@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using AssignmentManagementSystem.Models;
 using AssignmentManagementSystem.Data;
-
+using AssignmentManagementSystem.Areas.Identity.Data;
 
 namespace AssignmentManagementSystem.Controllers
 {
@@ -45,6 +45,27 @@ namespace AssignmentManagementSystem.Controllers
             }
 
             return View(module);
+        }
+
+        public async Task<IActionResult> AssignLecturer(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Module module = new Module();
+            module = await _context.Module.FindAsync(id);
+            if (module == null)
+            {
+                return NotFound();
+            }
+            
+            IEnumerable<AssignmentManagementSystemUser> lecturers = await _context.User.ToListAsync();
+            AssignLecturerModel model = new AssignLecturerModel();
+            model.module = module;
+            model.lecturers = lecturers;
+
+            return View(model);
         }
 
 
