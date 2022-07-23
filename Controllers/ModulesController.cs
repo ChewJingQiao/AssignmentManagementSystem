@@ -11,6 +11,7 @@ using AssignmentManagementSystem.Data;
 
 namespace AssignmentManagementSystem.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class ModulesController : Controller
     {
         private readonly AssignmentManagementSystemContext _context;

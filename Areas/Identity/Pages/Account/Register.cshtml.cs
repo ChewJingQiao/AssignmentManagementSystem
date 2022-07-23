@@ -98,6 +98,24 @@ namespace AssignmentManagementSystem.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+                bool roleExistResult = await _roleManager.RoleExistsAsync("Admin");
+                if(! roleExistResult)
+                {
+                    await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                }
+
+                roleExistResult = await _roleManager.RoleExistsAsync("Lecturer");
+                if (!roleExistResult)
+                {
+                    await _roleManager.CreateAsync(new IdentityRole("Lecturer"));
+                }
+
+                roleExistResult = await _roleManager.RoleExistsAsync("Student");
+                if (!roleExistResult)
+                {
+                    await _roleManager.CreateAsync(new IdentityRole("Student"));
+                }
+
                 var user = new AssignmentManagementSystemUser
                 {
                     UserName = Input.Email,
@@ -122,6 +140,8 @@ namespace AssignmentManagementSystem.Areas.Identity.Pages.Account
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    await _userManager.AddToRoleAsync(user, Input.userrole);
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
