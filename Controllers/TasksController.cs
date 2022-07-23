@@ -40,17 +40,19 @@ namespace AssignmentManagementSystem.Controllers
             return View(await assignmentlist.ToListAsync());
         }*/
 
+        //View Task
         public async Task<IActionResult> Index(string msg = "")
         {
             ViewBag.msg = msg;
             return View(await _context.Task.Include(d => d.Assignment).Include(d => d.Users).ToListAsync());
         }
 
+        //Create Task
         public IActionResult CreateTask()
         {
             return View();
         }
-
+  
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateTask([Bind("TaskId, AssignmentId, UserId, SubmissionDate, SubmitStatus")] Task task)
@@ -60,6 +62,60 @@ namespace AssignmentManagementSystem.Controllers
                 _context.Task.Add(task);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { msg = "Task Created Successfully!" });
+            }
+            return View(task);
+        }
+
+        //Edit Task
+        public async Task<IActionResult> Edit(string? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var task = await _context.Task.FindAsync(id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+            return View(task);
+        }
+
+        private bool TaskExists(string taskId)
+        {
+            return _context.Task.Any(e => e.TaskId == taskId);
+        }
+
+        // POST: Edit Task
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string id, [Bind("TaskId, AssignmentId, UserId, SubmissionDate, SubmitStatus")] Task task)
+        {
+            if (id != task.TaskId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(task);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TaskExists(task.TaskId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
             }
             return View(task);
         }

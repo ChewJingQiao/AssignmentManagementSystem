@@ -20,6 +20,7 @@
             <th>User ID</th>
             <th>Submission Date</th>
             <th>Submit Status</th>
+            <th>Actions</th>
         </tr>
         @foreach (var singledatarow in Model)
     {
@@ -29,6 +30,11 @@
             <td>@singledatarow.Users.lastName</td>
             <td>@singledatarow.SubmissionDate</td>
             <td>@singledatarow.SubmitStatus</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@singledatarow.TaskId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@singledatarow.TaskId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@singledatarow.TaskId">Delete</a>
+            </td>
         </tr>
     }
 
