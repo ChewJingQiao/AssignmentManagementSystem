@@ -122,7 +122,7 @@ namespace AssignmentManagementSystem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int TeamAssignmentId, [Bind("TeamAssignmentId,TeamId,AssignmentId,s3Location,submitStatus,mark")] TeamAssignment teamAssignment)
+        public async Task<IActionResult> Edit(int TeamAssignmentId, [Bind("TeamAssignmentId,AssignmentId,s3Location,submitStatus,mark,Teammate1,Teammate2,Teammate3,Teammate4")] TeamAssignment teamAssignment)
         {
             if (TeamAssignmentId != teamAssignment.TeamAssignmentId)
             {

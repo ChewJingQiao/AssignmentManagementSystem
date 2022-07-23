@@ -12,24 +12,31 @@
 <h1>Assignments</h1>
 
 <table class="table table-striped">
-    <tr>
+    <tr style="font-size:x-small;">
         <th>Team Assignment ID</th>
         <th>Team ID</th>
         <th>Assignment ID</th>
         <th>Submitted File</th>
         <th>Submission Status</th>
         <th>Mark</th>
+        <th>Team Mate 1</th>
+        <th>Team Mate 2</th>
+        <th>Team Mate 3</th>
+        <th>Team Mate 4</th>
         <th>Action</th>
     </tr>
     @foreach (var singledatarow in Model)
     {
         <tr>
             <td>@singledatarow.TeamAssignmentId</td>
-            <td>@singledatarow.TeamId</td>
             <td>@singledatarow.AssignmentId</td>
             <td>@singledatarow.s3Location</td>
             <td>@singledatarow.submitStatus</td>
             <td>@singledatarow.mark</td>
+            <td>@singledatarow.Teammate1</td>
+            <td>@singledatarow.Teammate2</td>
+            <td>@singledatarow.Teammate3</td>
+            <td>@singledatarow.Teammate4</td>
             <td>
                 <a asp-action="Mark" asp-route-id="@singledatarow.TeamAssignmentId">Mark</a>
                 <a asp-action="downloadAssignment" asp-route-filename="@singledatarow.s3Location"><button>Download</button></a>

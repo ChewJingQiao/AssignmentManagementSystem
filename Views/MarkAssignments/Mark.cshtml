@@ -16,11 +16,6 @@
                 <span asp-validation-for="TeamAssignmentId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TeamId" class="control-label"></label>
-                <input asp-for="TeamId" class="form-control" readonly />
-                <span asp-validation-for="TeamId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="AssignmentId" class="control-label"></label>
                 <input asp-for="AssignmentId" class="form-control" readonly />
                 <span asp-validation-for="AssignmentId" class="text-danger"></span>
@@ -39,6 +34,30 @@
                 <label asp-for="mark" class="control-label"></label>
                 <input asp-for="mark" class="form-control" />
                 <span asp-validation-for="mark" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Teammate1" class="control-label"></label>
+                <input asp-for="Teammate1" class="form-control" readonly />
+                <span asp-validation-for="Teammate1" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Teammate2" class="control-label"></label>
+                <input asp-for="Teammate2" class="form-control" readonly />
+                <span asp-validation-for="Teammate2" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Teammate3" class="control-label"></label>
+                <input asp-for="Teammate3" class="form-control" readonly />
+                <span asp-validation-for="Teammate3" class="text-danger"></span>
+
+                <div class="form-group">
+                    <label asp-for="Teammate4" class="control-label"></label>
+                    <input asp-for="Teammate4" class="form-control" readonly />
+                    <span asp-validation-for="Teammate4" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

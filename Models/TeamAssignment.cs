@@ -13,8 +13,6 @@ namespace AssignmentManagementSystem.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TeamAssignmentId { get; set; }
 
-        public string TeamId { get; set; }
-
         public string AssignmentId { get; set; }
         
         public string s3Location { get; set; }
@@ -22,5 +20,13 @@ namespace AssignmentManagementSystem.Models
         public string submitStatus { get; set; }
 
         public int mark { get; set; }
+
+        public string Teammate1 { get; set; }
+
+        public string Teammate2 { get; set; }
+
+        public string Teammate3 { get; set; }
+
+        public string Teammate4 { get; set; }
     }
 }
