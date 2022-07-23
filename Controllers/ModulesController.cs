@@ -52,10 +52,7 @@ namespace AssignmentManagementSystem.Controllers
 
         public async Task<IActionResult> AssignLecturer(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+
             Module module = new Module();
             module = await _context.Module.FindAsync(id);
             if (module == null)

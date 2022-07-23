@@ -1,19 +1,27 @@
 ﻿@model IEnumerable<AssignmentManagementSystem.Models.Task>
-@{
+    @{
     ViewData["Title"] = "Index";
+    }
+    @if (ViewBag.msg != "")
+{
+    <script>alert("@ViewBag.msg");</script>
 }
 
-<h1>Tasks</h1>
 
-<table border="1">
-    <tr>
-        <th>Task ID</th>
-        <th>Assignment Name</th>
-        <th>User Name</th>
-        <th>Submission Date</th>
-        <th>Submit Status</th>
-    </tr>
-    @foreach (var singledatarow in Model)
+    <h1>Tasks</h1>
+
+    <p><a asp-controller="Tasks" asp-action="CreateTask">Create Task</a></p>
+
+
+    <table class="table table-striped">
+        <tr>
+            <th>Task ID</th>
+            <th>Assignment ID</th>
+            <th>User ID</th>
+            <th>Submission Date</th>
+            <th>Submit Status</th>
+        </tr>
+        @foreach (var singledatarow in Model)
     {
         <tr>
             <td>@singledatarow.TaskId</td>
@@ -24,4 +32,4 @@
         </tr>
     }
 
-</table>
+    </table>
