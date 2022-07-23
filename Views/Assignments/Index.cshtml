@@ -20,6 +20,7 @@
         <th>Handout Date</th>
         <th>Submission Date</th>
         <th>Module Name</th>
+        <th>Action</th>
     </tr>
     @foreach (var singledatarow in Model)
     {
@@ -29,6 +30,9 @@
             <td>@singledatarow.handoutDate</td>
             <td>@singledatarow.submissionDate</td>
             <td>@singledatarow.Module.ModuleName</td>
+            <td>
+                <a asp-action="AddTeamAssignment" asp-controller="AddTeamAssignments" asp-route-id="@singledatarow.AssignmentId">Add Team To Assignment</a>
+            </td>
         </tr>
     }
 
