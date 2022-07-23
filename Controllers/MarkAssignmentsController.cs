@@ -197,17 +197,17 @@ namespace AssignmentManagementSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> secondDownloadImage(string filename)
+        public async Task<IActionResult> downloadAssignment(string filename)
         {
-            Stream imageStream = await ReadObjectData(filename);
-            string imageFile = Path.GetFileName(filename);
+            Stream stream = await ReadObjectData(filename);
+            string file = Path.GetFileName(filename);
             Response.Headers.Add("Content-Disposition", new ContentDisposition
             {
-                FileName = imageFile,
-                Inline = false //false = prompt the user for downloading; true = browser to try to show the file inline
+                FileName = file,
+                Inline = false 
             }.ToString());
 
-            return File(imageStream, "image/jpeg");
+            return File(stream, "application/pdf");
         }
 
 

@@ -60,7 +60,7 @@ namespace AssignmentManagementSystem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken] //avoid cross-site attack
-        public async Task<IActionResult> uploadAssignment(IFormFile file)
+        public async Task<IActionResult> uploadAssignment(IFormFile file,int? id)
         {
             //1.get the keys from the appsettings.json
             List<string> keyLists = getAWSCredentialInfo();
@@ -70,37 +70,30 @@ namespace AssignmentManagementSystem.Controllers
 
             string filename = "";
 
-            //3. send the images 1 by 1 to the s3
-            
-                //3.1. input file validation
-                //if (image.Length <= 0)
-                //{
-                //    return BadRequest(image.FileName + " is having an empty content! so not allow to upload to S3!");
-                //}
-                //else if (image.Length > 1048576)
-                //{
-                //    return BadRequest(image.FileName + " is exceeded 1MB size! so not allow to upload to S3!");
-                //}
-                //else if (image.ContentType.ToLower() != "image/png" && image.ContentType.ToLower() != "image/jpeg" && image.ContentType.ToLower() != "image/gif")
-                //{
-                //    return BadRequest(image.FileName + " is not a valid image for uploading! Please change the file!");
-                //}
+            if (file == null)
+            {
+                return BadRequest("No file selected!");
+            }
 
-                //3.2 all small validation passed
-                try
+            var teamAssignment = await _context.TeamAssignment.FindAsync(id);
+            
+
+            try
                 {
                     //3.2.1 create an upload request for the S3
                     PutObjectRequest uploadrequest = new PutObjectRequest
                     {
                         InputStream = file.OpenReadStream(), //source file
-                        BucketName = bucketname + "/assignment", //bucket path or bucket path with folder
+                        BucketName = bucketname + "/assignment/"+id, //bucket path or bucket path with folder
                         Key = file.FileName, //object name in S3
                         CannedACL = S3CannedACL.PublicRead // open to the public to access the upload object
                     };
 
                     //3.2.2 execute the request command
                     await s3clientobject.PutObjectAsync(uploadrequest);
-                
+                teamAssignment.s3Location = "assignment/" + id+"/"+file.FileName;
+                _context.Update(teamAssignment);
+                await _context.SaveChangesAsync();
                 filename = filename + " " + file.FileName + " , ";
                 }
                 catch (AmazonS3Exception ex)
