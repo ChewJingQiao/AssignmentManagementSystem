@@ -1,0 +1,39 @@
+﻿@model IEnumerable<AssignmentManagementSystem.Models.TeamAssignment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (ViewBag.msg != "")
+{
+    <script>alert("@ViewBag.msg");</script>
+}
+
+<h1>Assignments</h1>
+
+<table class="table table-striped">
+    <tr>
+        <th>Team Assignment ID</th>
+        <th>Team ID</th>
+        <th>Assignment ID</th>
+        <th>Submitted File</th>
+        <th>Submission Status</th>
+        <th>Mark</th>
+        <th>Action</th>
+    </tr>
+    @foreach (var singledatarow in Model)
+    {
+        <tr>
+            <td>@singledatarow.TeamAssignmentId</td>
+            <td>@singledatarow.TeamId</td>
+            <td>@singledatarow.AssignmentId</td>
+            <td>@singledatarow.s3Location</td>
+            <td>@singledatarow.submitStatus</td>
+            <td>@singledatarow.mark</td>
+            <td>
+                <a asp-action="Mark" asp-route-id="@singledatarow.TeamAssignmentId">Mark</a>
+            </td>
+        </tr>
+    }
+
+</table>

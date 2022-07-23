@@ -11,7 +11,7 @@ namespace AssignmentManagementSystem.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string TeamAssignmentId { get; set; }
+        public int TeamAssignmentId { get; set; }
 
         public string TeamId { get; set; }
 
