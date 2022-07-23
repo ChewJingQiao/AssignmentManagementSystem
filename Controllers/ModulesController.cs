@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using AssignmentManagementSystem.Models;
 using AssignmentManagementSystem.Data;
 using AssignmentManagementSystem.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AssignmentManagementSystem.Controllers
 {
@@ -15,6 +17,7 @@ namespace AssignmentManagementSystem.Controllers
     public class ModulesController : Controller
     {
         private readonly AssignmentManagementSystemContext _context;
+
 
         public ModulesController(AssignmentManagementSystemContext context)
         {
@@ -61,13 +64,21 @@ namespace AssignmentManagementSystem.Controllers
             }
             
             IEnumerable<AssignmentManagementSystemUser> lecturers = await _context.User.ToListAsync();
+            //var x = RoleManager.Roles.Single(x => x.userrole == "Lecturer").Users;
+            var lecturerlist = this._context.User.ToList();
+            List<AssignmentManagementSystemUser> lecturerlist1 = new List<AssignmentManagementSystemUser>();
+            foreach(AssignmentManagementSystemUser aa in lecturerlist)
+            {
+                if(aa.userrole == "Lecturer")
+                {
+                    lecturerlist1.Add(aa);
+                }
+            }
             AssignLecturerModel model = new AssignLecturerModel();
             model.module = module;
-            model.lecturers = lecturers;
+            model.lecturers = lecturerlist1;
 
             return View(model);
         }
-
-
     }
 }

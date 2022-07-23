@@ -24,5 +24,18 @@ namespace AssignmentManagementSystem.Controllers
             //return View(lm);
             return View(await _context.LecturerModule.Include(d => d.Module).Include(d=>d.Users).ToListAsync());
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AssignLecturer([Bind("UserId,ModuleId")] LecturerModule lecturerModule)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.LecturerModule.Add(lecturerModule);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "LecturerModules", new { msg = "Lecturer assigned to module successfully!" });
+            }
+            return View();
+        }
     }
 }

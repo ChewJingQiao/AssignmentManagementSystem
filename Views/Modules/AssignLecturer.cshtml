@@ -10,12 +10,12 @@
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="AssignLecturer">
+            <form asp-action="AssignLecturer" asp-controller="LecturerModules" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="module.ModuleId" />
                 <div class="form-group">
                     <label asp-for="module.ModuleId" class="control-label"></label>
-                    <input asp-for="module.ModuleId" class="form-control" />
+                    <input id="ModuleId" name="ModuleId" asp-for="module.ModuleId" class="form-control" />
                     <span asp-validation-for="module.ModuleId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -24,13 +24,23 @@
                     <span asp-validation-for="module.ModuleName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
+                    <label>Lecturer</label><br />
+                    <select id="UserId" name="UserId">
+                        <option value="0">Please select lecturer</option>
+                        @foreach (var singledatarow in Model.lecturers)
+                        {
+                            <option value="@singledatarow.Id">@singledatarow.lastName @singledatarow.firstName</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
             </form>
         </div>
     </div>
 
-    <table border="1">
+    @*<table border="1">
         <tr>
             <th>Lecturer ID</th>
             <th>Lecturer Name</th>
@@ -43,7 +53,7 @@
             </tr>
         }
 
-    </table>
+    </table>*@
 
     <div>
         <a asp-action="Index">Back to List</a>
