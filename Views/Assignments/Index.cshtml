@@ -4,9 +4,16 @@
     ViewData["Title"] = "Index";
 }
 
+@if (ViewBag.msg != "")
+{
+    <script>alert("@ViewBag.msg");</script>
+}
+
 <h1>Assignments</h1>
 
-<table border="1">
+<p><a asp-controller="Assignments" asp-action="AddAssignment">Create Assignment</a></p>
+
+<table class="table table-striped">
     <tr>
         <th>Assignment ID</th>
         <th>Assignment Name</th>

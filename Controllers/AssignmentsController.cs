@@ -19,9 +19,28 @@ namespace AssignmentManagementSystem.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string msg = "")
         {
+            ViewBag.msg = msg;
           return View(await _context.Assignment.Include(d => d.Module).ToListAsync());
+        }
+
+        public IActionResult AddAssignment()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddAssignment([Bind("AssignmentId, AssignmentName, handoutDate, submissionDate, Module,ModuleRefId")] Assignment assignment)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Assignment.Add(assignment);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index), new { msg = "Assignment Created Successfully!" });
+            }
+            return View(assignment);
         }
     }
 }
