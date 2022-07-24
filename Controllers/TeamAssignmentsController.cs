@@ -111,6 +111,7 @@ namespace AssignmentManagementSystem.Controllers
                     //3.2.2 execute the request command
                     await s3clientobject.PutObjectAsync(uploadrequest);
                 teamAssignment.s3Location = "assignment/" + id+"/"+file.FileName;
+                teamAssignment.submitStatus = "Yes";
                 _context.Update(teamAssignment);
                 await _context.SaveChangesAsync();
                 filename = filename + " " + file.FileName + " , ";
