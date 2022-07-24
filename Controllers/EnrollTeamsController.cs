@@ -7,9 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AssignmentManagementSystem.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AssignmentManagementSystem.Controllers
 {
+    [Authorize(Roles = "Student")]
     public class EnrollTeamsController : Controller
     {
         private readonly AssignmentManagementSystemContext _context;
