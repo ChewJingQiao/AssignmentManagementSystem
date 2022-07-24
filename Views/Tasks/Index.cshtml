@@ -10,7 +10,6 @@
 
     <h1>Tasks</h1>
 
-    <p><a asp-controller="Tasks" asp-action="CreateTask">Create Task</a></p>
         <table class="table table-striped">
             <tr>
                 @*<th>Task ID</th>*@
@@ -60,10 +59,7 @@
                 <td>None</td>
             }
             <td>
-                <a asp-action="CreateTask" asp-route-id="@singledatarow.TeamAssignmentId">Add Task</a>
-                @*<a asp-action="Edit" asp-route-id="@singledatarow.TaskId">Edit</a> |
-            <a asp-action="Details" asp-route-id="@singledatarow.TaskId">Details</a> |
-            <a asp-action="Delete" asp-route-id="@singledatarow.TaskId">Delete</a>*@
+                <a asp-action="AddTask" asp-route-taid="@singledatarow.TeamAssignmentId" asp-route-aid ="@singledatarow.AssignmentId">Add Task</a>
             </td>
         </tr>
             }

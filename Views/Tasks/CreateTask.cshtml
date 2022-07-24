@@ -1,7 +1,8 @@
-﻿@model IEnumerable<AssignmentManagementSystem.Models.Task>
+﻿@model IEnumerable<AssignmentManagementSystem.Areas.Identity.Data.AssignmentManagementSystemUser>
 
     @{
-    ViewData["Title"] = "CreateTask";
+        ViewData["Title"] = "CreateTask";
+       
     }
 
 
@@ -13,29 +14,47 @@
         <table>
             <tr>
                 <th>Team Assignment ID</th>
-                <td><input type="text" name="TeamAssignmentId" placeholder="e.g. 100001" required /></td>
+                <td><input class="form-control m-2" type="text" name="TeamAssignmentId" value="@ViewBag.taid" readonly /></td>
             </tr>
             <tr>
                 <th>Assignment ID</th>
-                <td><input type="text" name="AssignmentId" placeholder="e.g. A00001" required /></td>
-            </tr>
-            <tr>
-                <th>User ID</th>
-                <td><input type="text" name="UserId" required /></td>
+                <td><input class="form-control m-2" type="text" name="AssignmentId" value="@ViewBag.aid" readonly /></td>
             </tr>
             <tr>
                 <th>Submission Date</th>
-                <td><input type="date" name="SubmissionDate" required /></td>
+                <td><input class="form-control m-2" type="date" name="SubmissionDate" required /></td>
             </tr>
             <tr>
-                <td><input type="text" name="SubmitStatus" value="Not Submitted" hidden /></td>
+                <th>Submit Status</th>
+                <td><input class="form-control m-2" type="text" name="SubmitStatus" value="Not Submitted" readonly /></td>
+            </tr>
+            <tr>
+                <th>Users</th>
+                <td>
+                    <select class="form-control m-2" id="UserId" name="UserId">
+                        <option value="0">Please select team mate</option>
+                        @foreach (var singledatarow in Model)
+                        {
+                            @if (singledatarow != null)
+                            {
+                                <option value="@singledatarow.Id">@singledatarow.lastName @singledatarow.firstName</option>
+                            }
+                            else
+                            {
+
+                            }
+
+                        }
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td colspan="2" style="text-align:center">
-                    <input type="submit" name="submit" value="Create New Task" />
+                    <input class="form-control m-2" type="submit" name="submit" value="Create New Task" />
                 </td>
             </tr>
         </table>
+        
     </form>
     <div>
         <a asp-action="Index">Back to List</a>

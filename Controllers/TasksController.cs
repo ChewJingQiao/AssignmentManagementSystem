@@ -56,25 +56,51 @@ namespace AssignmentManagementSystem.Controllers
         }
 
         //Add Tasks
-        public async Task<IActionResult> AddTask(int? id)
+        public async Task<IActionResult> AddTask(int? taid, string aid)
         {
+            ViewBag.taid = taid;
+            ViewBag.aid = aid;
             List<Task> taskList = await _context.Task.Include(d => d.Assignment).Include(d => d.Users).Include(d => d.TeamAssignment).ToListAsync();
             List<Task> subTaskList = new List<Task>();
             foreach (Task task in taskList)
             {
-                if(task.TeamAssignmentId == id)
+                if(task.TeamAssignmentId == taid)
                 {
                     subTaskList.Add(task);
                 }
-                return View(subTaskList);
             }
             return View(subTaskList);
         }
 
         ////////////////Create Task
-        public IActionResult CreateTask()
+        public async Task<IActionResult> CreateTask(int? taid, string aid)
         {
-            return View();
+            ViewBag.taid = taid;
+            ViewBag.aid = aid;
+
+            var studentlist = this._context.User.ToList();
+            List<TeamAssignment> talist = this._context.TeamAssignment.ToList();
+            List<AssignmentManagementSystemUser> studentteamlist = new List<AssignmentManagementSystemUser>();
+            List<AssignmentManagementSystemUser> tauser = new List<AssignmentManagementSystemUser>();
+            foreach (AssignmentManagementSystemUser aa in studentlist)
+            {
+                if (aa.userrole == "Student")
+                {
+                    studentteamlist.Add(aa);
+                }
+            }
+            foreach(TeamAssignment bb in talist )
+            {
+                if(bb.TeamAssignmentId == taid)
+                {
+                    tauser.Add(bb.TeammateOne);
+                    tauser.Add(bb.TeammateTwo);
+                    tauser.Add(bb.TeammateThree);
+                    tauser.Add(bb.TeammateFour);
+                    return View(tauser);
+                }
+            }
+            return View(tauser);
         }
   
         [HttpPost]
@@ -85,13 +111,13 @@ namespace AssignmentManagementSystem.Controllers
             {
                 _context.Task.Add(task);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index), new { msg = "Task Created Successfully!" });
+                return RedirectToAction("Index", "Tasks", new { msg = "Task Created Successfully!" });
             }
             return View(task);
         }
 
         /////////////////Edit Task
-        public async Task<IActionResult> Edit(string? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -152,7 +178,7 @@ namespace AssignmentManagementSystem.Controllers
                 return NotFound();
             }
 
-            var task = await _context.Task
+            var task = await _context.Task.Include(d=>d.Users)
                 .FirstOrDefaultAsync(m => m.TaskId == id);
             if (task == null)
             {
@@ -170,7 +196,7 @@ namespace AssignmentManagementSystem.Controllers
                 return NotFound();
             }
 
-            var task = await _context.Task
+            var task = await _context.Task.Include(d => d.Users)
                 .FirstOrDefaultAsync(m => m.TaskId == id);
             if (task == null)
             {
@@ -183,7 +209,7 @@ namespace AssignmentManagementSystem.Controllers
         ///////////////POST: Delete Task
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var task = await _context.Task.FindAsync(id);
             _context.Task.Remove(task);

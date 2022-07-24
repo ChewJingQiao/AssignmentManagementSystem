@@ -5,10 +5,12 @@
 
 
 <h1>Assign Task</h1>
-<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-<p><a asp-controller="Tasks" asp-action="CreateTask">Create Task</a></p>
+<p><a asp-controller="Tasks" asp-action="CreateTask" asp-route-taid="@ViewBag.taid" asp-route-aid="@ViewBag.aid">Create Task</a></p>
+
+
 <table class="table table-striped">
     <tr>
+        <th>Task Id</th>
         <th>Team Assignment ID</th>
         <th>Assignment ID</th>
         <th>User Name</th>
@@ -19,6 +21,7 @@
     @foreach (var singledatarow in Model)
     {
         <tr>
+            <td>@singledatarow.TaskId</td>
             <td>@singledatarow.TeamAssignment.TeamAssignmentId</td>
             <td>@singledatarow.AssignmentId</td>
             <td>@singledatarow.Users.firstName</td>
