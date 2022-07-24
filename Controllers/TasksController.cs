@@ -117,8 +117,9 @@ namespace AssignmentManagementSystem.Controllers
         }
 
         /////////////////Edit Task
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, string name)
         {
+            ViewBag.name = name;
             if (id == null)
             {
                 return NotFound();
@@ -140,7 +141,7 @@ namespace AssignmentManagementSystem.Controllers
         // POST: Edit Task
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TaskId, TeamAssignmentId, AssignmentId, UserId, SubmissionDate, SubmitStatus")] Task task)
+        public async Task<IActionResult> Edit(int id, [Bind("TaskId, TaskName, TeamAssignmentId, AssignmentId, UserId, SubmissionDate, SubmitStatus")] Task task)
         {
             if (id != task.TaskId)
             {
