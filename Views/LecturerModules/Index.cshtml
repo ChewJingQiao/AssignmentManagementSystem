@@ -5,16 +5,14 @@
 
 <h1>Modules</h1>
 
-<table border="1">
+<table class="table table-striped">
     <tr>
-        <th>Lecturer Module ID</th>
         <th>Lecturer Name</th>
         <th>Module Name</th>
     </tr>
     @foreach (var singledatarow in Model)
     {
         <tr>
-            <td>@singledatarow.LecturerModuleId</td>
             <td>@singledatarow.Users.lastName</td>
             <td>@singledatarow.Module.ModuleName</td>
         </tr>
