@@ -12,6 +12,11 @@ namespace AssignmentManagementSystem.Models
     {
         [Key]
         public string TaskId { get; set; }
+
+        [ForeignKey("TeamAssignmentId")]
+        public TeamAssignment TeamAssignment { get; set; }
+        public int TeamAssignmentId { get; set; }
+
         [ForeignKey("AssignmentId")]
         public Assignment Assignment { get; set; }
 

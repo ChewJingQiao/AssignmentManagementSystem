@@ -44,10 +44,10 @@ namespace AssignmentManagementSystem.Controllers
         public async Task<IActionResult> Index(string msg = "")
         {
             ViewBag.msg = msg;
-            return View(await _context.Task.Include(d => d.Assignment).Include(d => d.Users).ToListAsync());
+            return View(await _context.Task.Include(d => d.Assignment).Include(d => d.Users).Include(d=>d.TeamAssignment).ToListAsync());
         }
 
-        //Create Task
+        ////////////////Create Task
         public IActionResult CreateTask()
         {
             return View();
@@ -55,7 +55,7 @@ namespace AssignmentManagementSystem.Controllers
   
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateTask([Bind("TaskId, AssignmentId, UserId, SubmissionDate, SubmitStatus")] Task task)
+        public async Task<IActionResult> CreateTask([Bind("TaskId, TeamAssignmentId, AssignmentId, UserId, SubmissionDate, SubmitStatus")] Task task)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace AssignmentManagementSystem.Controllers
             return View(task);
         }
 
-        //Edit Task
+        /////////////////Edit Task
         public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
@@ -90,7 +90,7 @@ namespace AssignmentManagementSystem.Controllers
         // POST: Edit Task
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("TaskId, AssignmentId, UserId, SubmissionDate, SubmitStatus")] Task task)
+        public async Task<IActionResult> Edit(string id, [Bind("TaskId, TeamAssignmentId, AssignmentId, UserId, SubmissionDate, SubmitStatus")] Task task)
         {
             if (id != task.TaskId)
             {
@@ -119,5 +119,53 @@ namespace AssignmentManagementSystem.Controllers
             }
             return View(task);
         }
+
+        /////////////////Task Details
+        public async Task<IActionResult> Details(string? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var task = await _context.Task
+                .FirstOrDefaultAsync(m => m.TaskId == id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            return View(task);
+        }
+
+        /////////////////GET: Delete Task
+        public async Task<IActionResult> Delete(string? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var task = await _context.Task
+                .FirstOrDefaultAsync(m => m.TaskId == id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            return View(task);
+        }
+
+        ///////////////POST: Delete Task
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            var task = await _context.Task.FindAsync(id);
+            _context.Task.Remove(task);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }

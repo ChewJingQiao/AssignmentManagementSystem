@@ -16,6 +16,7 @@
     <table class="table table-striped">
         <tr>
             <th>Task ID</th>
+            <th>Team Assignment ID</th>
             <th>Assignment ID</th>
             <th>User ID</th>
             <th>Submission Date</th>
@@ -24,18 +25,19 @@
         </tr>
         @foreach (var singledatarow in Model)
     {
-        <tr>
-            <td>@singledatarow.TaskId</td>
-            <td>@singledatarow.Assignment.AssignmentName</td>
-            <td>@singledatarow.Users.lastName</td>
-            <td>@singledatarow.SubmissionDate</td>
-            <td>@singledatarow.SubmitStatus</td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@singledatarow.TaskId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@singledatarow.TaskId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@singledatarow.TaskId">Delete</a>
-            </td>
-        </tr>
+    <tr>
+        <td>@singledatarow.TaskId</td>
+        <td>@singledatarow.TeamAssignment.TeamAssignmentId</td>
+        <td>@singledatarow.Assignment.AssignmentName</td>
+        <td>@singledatarow.Users.lastName</td>
+        <td>@singledatarow.SubmissionDate</td>
+        <td>@singledatarow.SubmitStatus</td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@singledatarow.TaskId">Edit</a> |
+            <a asp-action="Details" asp-route-id="@singledatarow.TaskId">Details</a> |
+            <a asp-action="Delete" asp-route-id="@singledatarow.TaskId">Delete</a>
+        </td>
+    </tr>
     }
 
     </table>
