@@ -41,6 +41,10 @@ namespace AssignmentManagementSystem.Controllers
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var userid = user.Id;
             var teamAssignment = await _context.TeamAssignment.FindAsync(id);
+            if(teamAssignment.Teammate1== userid|| teamAssignment.Teammate2 == userid|| teamAssignment.Teammate3 == userid|| teamAssignment.Teammate4 == userid)
+            {
+                return RedirectToAction("Index", "EnrollTeams", new { msg = "Already enrolled in team!" });
+            }
             if (teamAssignment.Teammate1 == null)
             {
                 teamAssignment.Teammate1 = userid;
