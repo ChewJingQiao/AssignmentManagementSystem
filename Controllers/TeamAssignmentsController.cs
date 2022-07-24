@@ -43,23 +43,13 @@ namespace AssignmentManagementSystem.Controllers
             List<TeamAssignment> studentTeam = new List<TeamAssignment>();
             foreach (TeamAssignment ta in teamassignmentlist)
             {
-                if (ta.Teammate1 == userid)
+                if (ta.Teammate1 == userid || ta.Teammate2 == userid || ta.Teammate3 == userid || ta.Teammate4 == userid)
                 {
                     studentTeam.Add(ta);
                 }
-                else if(ta.Teammate2==userid){
-                    studentTeam.Add(ta);
-                }
-                else if (ta.Teammate3 == userid)
-                {
-                    studentTeam.Add(ta);
-                }
-                else if (ta.Teammate4 == userid)
-                {
-                    studentTeam.Add(ta);
-                }
+                
             }
-            return View();
+            return View(studentTeam);
         }
 
         private List<string> getAWSCredentialInfo()
@@ -81,8 +71,9 @@ namespace AssignmentManagementSystem.Controllers
             return keyLists;
         }
 
-        public IActionResult UploadAssignment()
+        public IActionResult UploadAssignment(int? id)
         {
+            ViewBag.teamAssignmentId = id;
             return View();
         }
 
