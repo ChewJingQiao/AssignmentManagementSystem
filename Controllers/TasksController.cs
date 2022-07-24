@@ -52,13 +52,23 @@ namespace AssignmentManagementSystem.Controllers
                 }
             }
             return null;
-                //return View(await _context.Task.Include(d => d.Assignment).Include(d => d.Users).Include(d=>d.TeamAssignment).ToListAsync());
+            //return View(await _context.Task.Include(d => d.Assignment).Include(d => d.Users).Include(d=>d.TeamAssignment).ToListAsync());
         }
 
         //Add Tasks
-        public IActionResult AddTask()
+        public async Task<IActionResult> AddTask(int? id)
         {
-            return View();
+            List<Task> taskList = await _context.Task.Include(d => d.Assignment).Include(d => d.Users).Include(d => d.TeamAssignment).ToListAsync();
+            List<Task> subTaskList = new List<Task>();
+            foreach (Task task in taskList)
+            {
+                if(task.TeamAssignmentId == id)
+                {
+                    subTaskList.Add(task);
+                }
+                return View(subTaskList);
+            }
+            return View(subTaskList);
         }
 
         ////////////////Create Task
@@ -69,7 +79,7 @@ namespace AssignmentManagementSystem.Controllers
   
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateTask([Bind("TaskId, TeamAssignmentId, AssignmentId, UserId, SubmissionDate, SubmitStatus")] Task task)
+        public async Task<IActionResult> CreateTask([Bind("TeamAssignmentId, AssignmentId, UserId, SubmissionDate, SubmitStatus")] Task task)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +106,7 @@ namespace AssignmentManagementSystem.Controllers
             return View(task);
         }
 
-        private bool TaskExists(string taskId)
+        private bool TaskExists(int taskId)
         {
             return _context.Task.Any(e => e.TaskId == taskId);
         }
@@ -104,7 +114,7 @@ namespace AssignmentManagementSystem.Controllers
         // POST: Edit Task
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("TaskId, TeamAssignmentId, AssignmentId, UserId, SubmissionDate, SubmitStatus")] Task task)
+        public async Task<IActionResult> Edit(int id, [Bind("TaskId, TeamAssignmentId, AssignmentId, UserId, SubmissionDate, SubmitStatus")] Task task)
         {
             if (id != task.TaskId)
             {
@@ -135,7 +145,7 @@ namespace AssignmentManagementSystem.Controllers
         }
 
         /////////////////Task Details
-        public async Task<IActionResult> Details(string? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -153,7 +163,7 @@ namespace AssignmentManagementSystem.Controllers
         }
 
         /////////////////GET: Delete Task
-        public async Task<IActionResult> Delete(string? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
