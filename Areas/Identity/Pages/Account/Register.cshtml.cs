@@ -15,6 +15,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Amazon.SimpleNotificationService;
+using Amazon;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+using Amazon.SimpleNotificationService.Model;
 
 namespace AssignmentManagementSystem.Areas.Identity.Pages.Account
 {
@@ -26,6 +31,8 @@ namespace AssignmentManagementSystem.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private const string topicArn = "arn:aws:sns:us-east-1:412960202609:testSNS";
+
 
         public SelectList RoleSelectList = new SelectList(new List<SelectListItem>
         {
@@ -46,6 +53,25 @@ namespace AssignmentManagementSystem.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+        }
+
+        private List<string> getAWSCredentialInfo()
+        {
+            //1.setup the appsettings.json file path in these sentence
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+
+            IConfigurationRoot configure = builder.Build(); //before link to the appsettings.json, build it for debugging
+
+            //2. read the key info from the json using configure instance
+            List<string> keyLists = new List<string>();
+            keyLists.Add(configure["AWScredential:key1"]); //accesskey
+            keyLists.Add(configure["AWScredential:key2"]); //sessionkey
+            keyLists.Add(configure["AWScredential:key3"]); //tokenkey
+
+            //return to the function who needs the keys
+            return keyLists;
         }
 
         [BindProperty]
@@ -129,6 +155,21 @@ namespace AssignmentManagementSystem.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    //subscribe student to sns
+                    if (Input.userrole == "Student")
+                    {
+
+                        List<string> keyLists = getAWSCredentialInfo();
+
+                        //2. setup the connection to S3 bucket
+                        var snsClient = new AmazonSimpleNotificationServiceClient(keyLists[0], keyLists[1], keyLists[2], RegionEndpoint.USEast1);
+
+                        SubscribeRequest emailRequest = new SubscribeRequest(topicArn, "email", Input.Email);
+
+                        SubscribeResponse emailSubscribeResponse = await snsClient.SubscribeAsync(emailRequest);
+                    }
+                    
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
