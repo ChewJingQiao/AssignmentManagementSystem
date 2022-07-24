@@ -26,8 +26,8 @@
                 <span asp-validation-for="s3Location" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="submitStatus" class="control-label"></label>
-                <input asp-for="submitStatus" class="form-control" readonly />
+                <label asp-for="submitStatus" class="control-label" hidden></label>
+                <input value="No" class="form-control" hidden />
                 <span asp-validation-for="submitStatus" class="text-danger"></span>
             </div>
             <div class="form-group">

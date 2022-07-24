@@ -1,4 +1,4 @@
-﻿
+﻿@model List<AssignmentManagementSystem.Models.Module>
 @{
     ViewData["Title"] = "AddAssignment";
 }
@@ -26,16 +26,30 @@
                 <td><input type="date" name="SubmissionDate" required /></td>
             </tr>
             <tr>
-                <th>Module ID</th>
-                <td><input type="text" name="ModuleRefId" placeholder="e.g. M00001" required /></td>
-            </tr>
+                <th>Module</th>
+                <td>
+                    <select class="form-control m-2" id="ModuleRefId" name="ModuleRefId">
+                        <option value="0">Select Module</option>
+                        @foreach (var singledatarow in Model)
+                        {
+                            @if (singledatarow != null)
+                            {
+                                <option value="@singledatarow.ModuleId">@singledatarow.ModuleName</option>
+                            }
+                            else
+                            {
 
+                            }
+
+                        }
+                    </select>
+                </td>
+            </tr>
             <tr>
                 <td colspan="2" style="text-align:center">
                     <input type="submit" name="submit" value="Create New Assignment" />
                 </td>
             </tr>
-
         </table>
     </form>
 </center>

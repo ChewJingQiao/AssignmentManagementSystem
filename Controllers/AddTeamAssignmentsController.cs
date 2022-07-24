@@ -43,6 +43,7 @@ namespace AssignmentManagementSystem.Controllers
         {
             if (ModelState.IsValid)
             {
+                teamAssignment.submitStatus = "No";
                 _context.TeamAssignment.Add(teamAssignment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "MarkAssignments", new { msg = "Team added to assignment successfully!" });

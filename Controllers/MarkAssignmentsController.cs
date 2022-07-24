@@ -97,11 +97,8 @@ namespace AssignmentManagementSystem.Controllers
                     }
                     return View(finallist);
                 }
-
             }
-
             return null;
-            //return View(await _context.TeamAssignment.ToListAsync());
         }
 
         public async Task<IActionResult> Mark(int?
