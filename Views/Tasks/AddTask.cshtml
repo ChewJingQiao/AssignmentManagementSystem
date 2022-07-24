@@ -2,19 +2,13 @@
 @{
     ViewData["Title"] = "AddTask";
 }
-@if (ViewBag.msg != "")
-{
-    <script>alert("@ViewBag.msg");</script>
-}
 
 
 <h1>Assign Task</h1>
-
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 <p><a asp-controller="Tasks" asp-action="CreateTask">Create Task</a></p>
 <table class="table table-striped">
     <tr>
-        @*<th>Task ID</th>*@
-        <th>Task ID</th>
         <th>Team Assignment ID</th>
         <th>Assignment ID</th>
         <th>User Name</th>
@@ -25,16 +19,15 @@
     @foreach (var singledatarow in Model)
     {
         <tr>
-            <td>@singledatarow.TaskId</td>
             <td>@singledatarow.TeamAssignment.TeamAssignmentId</td>
             <td>@singledatarow.AssignmentId</td>
             <td>@singledatarow.Users.firstName</td>
             <td>@singledatarow.SubmissionDate</td>
             <td>@singledatarow.SubmitStatus</td>
             <td>
-                @*<a asp-action="Edit" asp-route-id="@singledatarow.TaskId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@singledatarow.TaskId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@singledatarow.TaskId">Delete</a>*@
+                <a asp-action="Edit" asp-route-id="@singledatarow.TaskId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@singledatarow.TaskId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@singledatarow.TaskId">Delete</a>
             </td>
         </tr>
     }
