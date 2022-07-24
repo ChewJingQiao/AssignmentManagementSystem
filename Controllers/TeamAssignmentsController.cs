@@ -39,8 +39,26 @@ namespace AssignmentManagementSystem.Controllers
             ViewBag.msg = msg;
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var userid = user.Id;
-            List<TeamAssignment> teamassignmentlist = await _context.TeamAssignment.Include(m => m.).Where(m => m.Teammate1==userid).ToListAsync();
-
+            List<TeamAssignment> teamassignmentlist = await _context.TeamAssignment.Include(m => m.TeammateOne).Include(m => m.TeammateTwo).Include(m => m.TeammateThree).Include(m => m.TeammateFour).ToListAsync();
+            List<TeamAssignment> studentTeam = new List<TeamAssignment>();
+            foreach (TeamAssignment ta in teamassignmentlist)
+            {
+                if (ta.Teammate1 == userid)
+                {
+                    studentTeam.Add(ta);
+                }
+                else if(ta.Teammate2==userid){
+                    studentTeam.Add(ta);
+                }
+                else if (ta.Teammate3 == userid)
+                {
+                    studentTeam.Add(ta);
+                }
+                else if (ta.Teammate4 == userid)
+                {
+                    studentTeam.Add(ta);
+                }
+            }
             return View();
         }
 
