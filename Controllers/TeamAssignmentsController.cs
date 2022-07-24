@@ -14,24 +14,34 @@ using Microsoft.Extensions.Configuration; //link to the appsettings.json - getti
 using Microsoft.AspNetCore.Http; //upload the file from pc to the network
 using Amazon.S3.Transfer;
 using System.Net.Mime;
+using Microsoft.AspNetCore.Identity;
+using AssignmentManagementSystem.Areas.Identity.Data;
 
 namespace AssignmentManagementSystem.Controllers
 {
+
     public class TeamAssignmentsController : Controller
     {
         private readonly AssignmentManagementSystemContext _context;
         const string bucketname = "assignmentmanagementsystem";
+        private readonly UserManager<AssignmentManagementSystemUser> _userManager;
 
 
-        public TeamAssignmentsController(AssignmentManagementSystemContext context)
+
+        public TeamAssignmentsController(AssignmentManagementSystemContext context, UserManager<AssignmentManagementSystemUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index(string msg = "")
         {
             ViewBag.msg = msg;
-            return View(await _context.TeamAssignment.ToListAsync());
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var userid = user.Id;
+            List<TeamAssignment> teamassignmentlist = await _context.TeamAssignment.Include(m => m.).Where(m => m.Teammate1==userid).ToListAsync();
+
+            return View();
         }
 
         private List<string> getAWSCredentialInfo()
