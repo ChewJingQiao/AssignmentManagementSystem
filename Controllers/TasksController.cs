@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using AssignmentManagementSystem.Models;
 using AssignmentManagementSystem.Data;
 using Task = AssignmentManagementSystem.Models.Task;
+using AssignmentManagementSystem.Areas.Identity.Data;
 
 namespace AssignmentManagementSystem.Controllers
 {
@@ -21,30 +22,43 @@ namespace AssignmentManagementSystem.Controllers
             _context = context;
         }
 
-        //GET Assignment ID and User ID
-        /*public async Task<IActionResult> Index(string searchstring, string AssignmentType)
-        {
-            //retrieve the distinct flower type value from the flower table and attach to the html dropbox 
-            IQueryable<string> sqlquery = from m in _context.Assignment
-                                          orderby m.AssignmentName
-                                          select m.AssignmentName;
-
-            IEnumerable<SelectListItem> items = new SelectList(
-                    await sqlquery.Distinct().ToListAsync());
-
-            ViewBag.AssignmentType = items;
-
-            var assignmentlist = from m in _context.Assignment
-                                 select m;
-
-            return View(await assignmentlist.ToListAsync());
-        }*/
-
         //View Task
         public async Task<IActionResult> Index(string msg = "")
         {
             ViewBag.msg = msg;
-            return View(await _context.Task.Include(d => d.Assignment).Include(d => d.Users).Include(d=>d.TeamAssignment).ToListAsync());
+
+            List<TeamAssignment> teamassignmentlist = await _context.TeamAssignment.ToListAsync();
+            string username = User.Identity.Name;
+            var userlist = this._context.User.ToList();
+            foreach (AssignmentManagementSystemUser user in userlist)
+            {
+                if (user.UserName == username)
+                {
+                    string useridnow = user.Id;
+
+                    List<TeamAssignment> subTAlist = new List<TeamAssignment>();
+
+                    foreach (TeamAssignment ta in teamassignmentlist)
+                    {
+                        if (user.userrole == "Student")
+                        {
+                            if (ta.Teammate1 == useridnow || ta.Teammate2 == useridnow || ta.Teammate3 == useridnow || ta.Teammate4 == useridnow)
+                            {
+                                subTAlist.Add(ta);
+                            }
+                        }
+                    }
+                    return View(subTAlist);
+                }
+            }
+            return null;
+                //return View(await _context.Task.Include(d => d.Assignment).Include(d => d.Users).Include(d=>d.TeamAssignment).ToListAsync());
+        }
+
+        //Add Tasks
+        public IActionResult AddTask()
+        {
+            return View();
         }
 
         ////////////////Create Task

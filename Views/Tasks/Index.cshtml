@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AssignmentManagementSystem.Models.Task>
+﻿@model IEnumerable<AssignmentManagementSystem.Models.TeamAssignment>
     @{
     ViewData["Title"] = "Index";
     }
@@ -11,33 +11,33 @@
     <h1>Tasks</h1>
 
     <p><a asp-controller="Tasks" asp-action="CreateTask">Create Task</a></p>
-
-
-    <table class="table table-striped">
-        <tr>
-            <th>Task ID</th>
-            <th>Team Assignment ID</th>
-            <th>Assignment Name</th>
-            <th>User Name</th>
-            <th>Submission Date</th>
-            <th>Submit Status</th>
-            <th>Actions</th>
-        </tr>
-        @foreach (var singledatarow in Model)
-    {
-    <tr>
-        <td>@singledatarow.TaskId</td>
-        <td>@singledatarow.TeamAssignment.TeamAssignmentId</td>
-        <td>@singledatarow.Assignment.AssignmentName</td>
-        <td>@singledatarow.Users.lastName</td>
-        <td>@singledatarow.SubmissionDate</td>
-        <td>@singledatarow.SubmitStatus</td>
-        <td>
-            <a asp-action="Edit" asp-route-id="@singledatarow.TaskId">Edit</a> |
-            <a asp-action="Details" asp-route-id="@singledatarow.TaskId">Details</a> |
-            <a asp-action="Delete" asp-route-id="@singledatarow.TaskId">Delete</a>
-        </td>
-    </tr>
-    }
-
-    </table>
+        <table class="table table-striped">
+            <tr>
+                @*<th>Task ID</th>*@
+                <th>Team Assignment ID</th>
+                <th>Assignment ID</th>
+                <th>Member 1</th>
+                <th>Member 2</th>
+                <th>Member 3</th>
+                <th>Member 4</th>
+                <th>Action</th>
+            </tr>
+            @foreach (var singledatarow in Model)
+            {
+                <tr>
+                    @*<td>@singledatarow.TaskId</td>*@
+                    <td>@singledatarow.TeamAssignmentId</td>
+                    <td>@singledatarow.AssignmentId</td>
+                    <td>@singledatarow.Teammate1</td>
+                    <td>@singledatarow.Teammate2</td>
+                    <td>@singledatarow.Teammate3</td>
+                    <td>@singledatarow.Teammate4</td>
+                    <td>
+                        <a asp-action="AddTask" asp-route-id="@singledatarow.TeamAssignmentId">Add Task</a>
+                        @*<a asp-action="Edit" asp-route-id="@singledatarow.TaskId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@singledatarow.TaskId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@singledatarow.TaskId">Delete</a>*@
+                    </td>
+                </tr>
+            }
+        </table>
