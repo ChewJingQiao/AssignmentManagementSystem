@@ -101,15 +101,14 @@ namespace AssignmentManagementSystem.Controllers
             return null;
         }
 
-        public async Task<IActionResult> Mark(int?
-           id)
+        public async Task<IActionResult> Mark(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var taid = await _context.TeamAssignment.Include(d=>d.TeammateOne).Include(d=>d.TeammateTwo).Include(d=>d.TeammateThree).Include(d=>d.TeammateFour).FindAsync(id);
+            var taid = await _context.TeamAssignment.Include(d=>d.TeammateOne).Include(d=>d.TeammateTwo).Include(d=>d.TeammateThree).Include(d=>d.TeammateFour).FirstOrDefaultAsync(d=>d.TeamAssignmentId==id);
             if (taid == null)
             {
                 return NotFound();
@@ -128,9 +127,12 @@ namespace AssignmentManagementSystem.Controllers
 
             if (ModelState.IsValid)
             {
+               
                 try
                 {
-                    _context.Update(teamAssignment);
+                    var taid = await _context.TeamAssignment.FindAsync(TeamAssignmentId);
+                    taid.mark = teamAssignment.mark;
+                    _context.Update(taid);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
