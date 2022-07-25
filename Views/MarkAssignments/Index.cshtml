@@ -64,11 +64,11 @@
         <td>None</td>
     }
 <td>
-    <a asp-action="Mark" asp-route-id="@singledatarow.TeamAssignmentId">Mark</a> 
+    <a class="btn btn-success m-1" asp-action="Mark" asp-route-id="@singledatarow.TeamAssignmentId">Mark</a> 
     @if (singledatarow.s3Location != null)
     {
 
-        <a asp-action="downloadAssignment" asp-route-filename="@singledatarow.s3Location">Download</a>
+        <a class="btn btn-danger m-1" asp-action="downloadAssignment" asp-route-filename="@singledatarow.s3Location">Download</a>
 
     }
 

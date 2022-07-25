@@ -11,7 +11,7 @@
 
 <h1>Assignments</h1>
 
-<p><a asp-controller="Assignments" asp-action="AddAssignment">Create Assignment</a></p>
+<p><a class="btn btn-primary m-1" asp-controller="Assignments" asp-action="AddAssignment">Create Assignment</a></p>
 
 <table class="table table table-striped table-light">
     <tr>
@@ -31,7 +31,7 @@
             <td>@singledatarow.submissionDate</td>
             <td>@singledatarow.Module.ModuleName</td>
             <td>
-                <a asp-action="AddTeamAssignment" asp-controller="AddTeamAssignments" asp-route-id="@singledatarow.AssignmentId">Add Team To Assignment</a>
+                <a class="btn btn-warning m-1" asp-action="AddTeamAssignment" asp-controller="AddTeamAssignments" asp-route-id="@singledatarow.AssignmentId">Add Team</a>
             </td>
         </tr>
     }
