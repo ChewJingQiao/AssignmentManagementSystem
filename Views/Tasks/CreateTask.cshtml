@@ -31,8 +31,8 @@
             <tr>
                 <th>Users</th>
                 <td>
-                    <select class="form-control m-2" id="UserId" name="UserId">
-                        <option value="0">Select Teammate</option>
+                    <select class="form-control m-2" id="UserId" name="UserId" required>
+                        <option required value="0">Select Teammate</option>
                         @foreach (var singledatarow in Model)
                         {
                             @if (singledatarow != null)
