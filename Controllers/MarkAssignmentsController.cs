@@ -109,7 +109,7 @@ namespace AssignmentManagementSystem.Controllers
                 return NotFound();
             }
 
-            var taid = await _context.TeamAssignment.FindAsync(id);
+            var taid = await _context.TeamAssignment.Include(d=>d.TeammateOne).Include(d=>d.TeammateTwo).Include(d=>d.TeammateThree).Include(d=>d.TeammateFour).FindAsync(id);
             if (taid == null)
             {
                 return NotFound();
