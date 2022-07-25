@@ -29,7 +29,7 @@
             <td>@singledatarow.submissionDate</td>
             <td>@singledatarow.Module.ModuleName</td>
             <td>
-                <a asp-action="ViewTeams" asp-controller="EnrollTeams" asp-route-id="@singledatarow.AssignmentId">Select</a>
+                <a class="btn btn-primary" asp-action="ViewTeams" asp-controller="EnrollTeams" asp-route-id="@singledatarow.AssignmentId">Select</a>
             </td>
         </tr>
     }
